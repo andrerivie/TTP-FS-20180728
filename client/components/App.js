@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import Login from './Login';
 import Navbar from './Navbar'
 import Portfolio from './Portfolio'
+import Transactions from './Transactions'
 import axios from 'axios'
+import {Route} from 'react-router-dom'
 
 
 export default class App extends Component {
@@ -68,7 +70,16 @@ export default class App extends Component {
       <Navbar />
       {
         userId
-        ? <Portfolio userInfo={this.state} />
+        ? <div>
+          <Route
+            path='/portfolio'
+            render= {(props) => <Portfolio {...props} userInfo={this.state} />}
+          />
+          <Route
+            path='/transactions'
+            render= {(props) => <Transactions {...props} userInfo={this.state} />}
+          />
+          </div>
         : <Login
             handleLogin={this.handleLogin}
             handleCreate={this.handleCreate}

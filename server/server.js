@@ -30,7 +30,7 @@ db.sync()
     app.listen(PORT, () => console.log(`
 
       Loud and clear on port ${PORT}
-      http://localhost:3000/
+      http://localhost:${PORT}/
 
     `))
   })

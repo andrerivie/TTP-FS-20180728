@@ -1,6 +1,14 @@
 const router = require('express').Router()
 const {User} = require('../db/db')
 
+// router.get('/:id', async (req, res, next) => {
+//   try {
+//     const user = await
+//   } catch (error) {
+
+//   }
+// })
+
 router.post('/login', async (req, res, next) => {
   try {
     const input = {
