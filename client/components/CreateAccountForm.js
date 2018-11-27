@@ -21,8 +21,9 @@ class CreateAccountForm extends Component {
     const { handleCreate } = this.props
     return (
       <div className='form'>
-        <form onSubmit={this.handleSubmit}>
-          <h2>Create an Account!</h2>
+        <form onSubmit={(e) => {
+          handleCreate(e, this.state)
+        }}>
           <label htmlFor='name'>Name: </label>
             <input type='text' name='name'
               value={this.state.name}
@@ -41,7 +42,7 @@ class CreateAccountForm extends Component {
             onChange={this.handleChange}
           />
           <br/>
-          <button type='button' onClick={() => handleCreate(this.state)} >Create Account</button>
+          <button type='submit'>Create Account</button>
         </form>
       </div>
     )

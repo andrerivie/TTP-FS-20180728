@@ -29,7 +29,8 @@ export default class App extends Component {
     })
   }
 
-  async handleLogin(data) {
+  async handleLogin(e, data) {
+    e.preventDefault()
     try {
       const response = await axios.post('/api/users/login', data)
       if (response.data.error) {
@@ -46,8 +47,9 @@ export default class App extends Component {
     }
   }
 
-  async handleCreate(data) {
+  async handleCreate(e, data) {
     try {
+    e.preventDefault()
     const response = await axios.post('/api/users', data)
     this.setState({
       userId: response.data.id,
@@ -85,12 +87,16 @@ export default class App extends Component {
           />
 
           </div>
-        : <Login
-            handleLogin={this.handleLogin}
-            handleCreate={this.handleCreate}
-            switchToCreate={this.switchToCreate}
-            create={this.state.create}
-          />
+
+        : <div className='login-container' style={{textAlign: 'center'}}>
+          <h2>Welcome to StockUp!</h2>
+            <Login
+              handleLogin={this.handleLogin}
+              handleCreate={this.handleCreate}
+              switchToCreate={this.switchToCreate}
+              create={this.state.create}
+            />
+            </div>
       }
       </div>
     )

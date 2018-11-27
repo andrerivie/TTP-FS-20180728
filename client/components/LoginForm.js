@@ -20,7 +20,7 @@ class LoginForm extends Component {
     const { switchToCreate, handleLogin } = this.props
     return (
       <div className='form'>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={(e) => handleLogin(e, this.state)}>
           <h2>Enter Credentials or Create an Account Below</h2>
           <label htmlFor='email'>Email: </label>
             <input type='text' name='email'
@@ -34,7 +34,7 @@ class LoginForm extends Component {
               onChange={this.handleChange}
             />
             <br/>
-          <button type='button' onClick={() => handleLogin(this.state)} >Login</button>
+          <button type='submit'>Login</button>
           <button onClick={switchToCreate}>Create An Account</button>
         </form>
       </div>

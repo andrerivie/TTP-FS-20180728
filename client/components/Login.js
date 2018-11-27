@@ -9,11 +9,11 @@ const Login = (props) => {
       {create
       ? <CreateAccountForm
           handleCreate={handleCreate}
-          />
+        />
       : <LoginForm
           handleLogin={handleLogin}
           switchToCreate={switchToCreate}
-          />
+        />
       }
     </div>
   )
