@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import Portfolio from './Portfolio'
 import Transactions from './Transactions'
 import axios from 'axios'
-import {Route} from 'react-router-dom'
+import {Route, Redirect} from 'react-router-dom'
 
 
 export default class App extends Component {
@@ -67,18 +67,23 @@ export default class App extends Component {
     console.log(this.state)
     return (
       <div id='app-container' style={{padding: '12px'}}>
-      <Navbar />
       {
         userId
         ? <div>
+          <Navbar />
           <Route
-            path='/portfolio'
+            exact path='/'
             render= {(props) => <Portfolio {...props} userInfo={this.state} />}
           />
           <Route
             path='/transactions'
             render= {(props) => <Transactions {...props} userInfo={this.state} />}
           />
+          <Route
+            path='/portfolio'
+            render= {(props) => <Portfolio {...props} userInfo={this.state} />}
+          />
+
           </div>
         : <Login
             handleLogin={this.handleLogin}
