@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import Login from './Login';
 import Navbar from './Navbar'
+import Portfolio from './Portfolio'
 import axios from 'axios'
+
 
 export default class App extends Component {
   constructor() {
@@ -66,7 +68,7 @@ export default class App extends Component {
       <Navbar />
       {
         userId
-        ? <h3>Logged In! Welcome, {this.state.name}!</h3>
+        ? <Portfolio userInfo={this.state} />
         : <Login
             handleLogin={this.handleLogin}
             handleCreate={this.handleCreate}
