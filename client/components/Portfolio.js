@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
+import BuyForm from './BuyForm'
+import axios from 'axios'
 
 class Portfolio extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      userId: 0,
       funds: 0,
       currentValue: 328476,
       porfolio: [
@@ -18,6 +21,9 @@ class Portfolio extends Component {
   }
 
   componentDidMount() {
+    this.setState({
+      userId: this.props.userInfo.userId
+    })
 
   }
 
@@ -25,6 +31,10 @@ class Portfolio extends Component {
     this.setState({
       [evt.target.name]: evt.target.value
     })
+  }
+
+  handleBuy (evt) {
+
   }
 
   render() {
@@ -38,6 +48,7 @@ class Portfolio extends Component {
         </div>
         <div className='buy-view' style={{flex: 1}}>
           <h2>Funds: ${this.state.funds}</h2>
+          <BuyForm />
         </div>
       </div>
     )
