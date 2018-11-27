@@ -5,7 +5,9 @@ class BuyForm extends Component {
     super(props)
     this.state = {
       symbol: '',
-      quantity: ''
+      quantity: '',
+      cash: 0,
+
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -17,11 +19,12 @@ class BuyForm extends Component {
   }
 
   render() {
-    const { handleCreate } = this.props
+    const { handleBuy } = this.props
     return (
-      <div className='form'>
+      <div className='buy-form'>
+        <h2>Cash: ${this.state.cash}</h2>
         <form onSubmit={(e) => {
-          handleCreate(e, this.state)
+          handleBuy(e, this.state)
         }}>
           <label htmlFor='symbol'>Symbol: </label>
             <input type='text' name='symbol'

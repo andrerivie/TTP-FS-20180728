@@ -47,7 +47,6 @@ class Portfolio extends Component {
           })}
         </div>
         <div className='buy-view' style={{flex: 1}}>
-          <h2>Funds: ${this.state.funds}</h2>
           <BuyForm />
         </div>
       </div>

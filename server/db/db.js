@@ -31,8 +31,29 @@ const User = db.define('users', {
   }
 })
 
+const Sale = db.define('sales', {
+  symbol: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  quantity: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  price: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  }
+})
+
+User.hasMany(Sale)
+
 module.exports = {
   db,
-  User
+  User,
+  Sale
 }
 
