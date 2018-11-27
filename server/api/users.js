@@ -1,6 +1,28 @@
 const router = require('express').Router()
 const {User} = require('../db/db')
 
+router.post('/login', async (req, res, next) => {
+  try {
+    const input = {
+      email: req.body.email,
+      password: req.body.password
+    }
+    const user = await User.findOne({
+      where: {
+        email: input.email,
+        password: input.password
+      }
+    })
+    if (!user) {
+      res.send({error: 'User not found!'})
+    } else {
+      res.send(user)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const newUser = {

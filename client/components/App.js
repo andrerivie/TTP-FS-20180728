@@ -12,7 +12,6 @@ export default class App extends Component {
       create: false,
       funds: 0,
       name: '',
-      email: '',
     }
     this.switchToCreate = this.switchToCreate.bind(this)
     this.handleLogin = this.handleLogin.bind(this)
@@ -26,8 +25,21 @@ export default class App extends Component {
     })
   }
 
-  async handleLogin() {
-
+  async handleLogin(data) {
+    try {
+      const response = await axios.post('/api/users/login', data)
+      if (response.data.error) {
+        alert(response.data.error)
+      } else {
+        this.setState({
+          userId: response.data.id,
+          name: response.data.name,
+          funds: response.data.funds,
+        })
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   async handleCreate(data) {
@@ -48,8 +60,9 @@ export default class App extends Component {
 
   render() {
     const userId = this.state.userId
+    console.log(this.state)
     return (
-      <div id='app-container'>
+      <div id='app-container' style={{padding: '12px'}}>
       <Navbar />
       {
         userId
