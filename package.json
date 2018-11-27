@@ -4,16 +4,19 @@
   "description": "",
   "main": "webpack.config.js",
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
     "babel-preset-react": "^6.24.1",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
-    "react-dom": "^16.6.3",
+    "pg": "^7.6.1",
     "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
-    "webpack-cli": "^3.1.2",
-    "webpack": "^4.26.1"
+    "sequelize": "^4.41.2",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

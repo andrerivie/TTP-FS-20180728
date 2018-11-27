@@ -2,15 +2,15 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const bodyparser = require('body-parser');
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+const { db } = require('./db/db')
 
 app.use(morgan('dev'));
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', require('./api'));
 
@@ -24,6 +24,13 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500).send(err.message || 'Internal server error.');
 });
 
-app.listen(port, function () {
-  console.log(`Loud and clear on port ${port}`);
-});
+db.sync()
+  .then(() => {
+    console.log('The database is synced!')
+    app.listen(PORT, () => console.log(`
+
+      Loud and clear on port ${PORT}
+      http://localhost:3000/
+
+    `))
+  })
