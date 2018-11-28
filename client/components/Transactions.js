@@ -23,7 +23,7 @@ class Transactions extends Component {
         <h2>Transactions</h2>
         {transactions.map(sale => {
           return <p key={sale.id}>
-            BUY ({sale.symbol.toUpperCase()}) - {sale.quantity} shares @ $
+            BUY ({sale.symbol.toUpperCase()}) - {sale.quantity} share(s) @ $
             {(sale.price/100).toFixed(2)}
             </p>
         })}

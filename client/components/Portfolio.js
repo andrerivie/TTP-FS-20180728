@@ -62,7 +62,7 @@ class Portfolio extends Component {
           currentValue += item.price * item.quantity
         })
         this.setState({
-          newFunds, portfolio, currentValue
+          funds: newFunds, portfolio, currentValue
         })
       }
     } catch (error) {
@@ -85,12 +85,12 @@ class Portfolio extends Component {
             <h2>Portfolio Value: ${this.state.currentValue.toFixed(2)}</h2>
             {this.state.portfolio.map((stock, idx) => {
               return <p key={idx}>{stock.symbol.toUpperCase()} - {stock.quantity} shares
-              @ ${stock.price} - (${(stock.price*stock.quantity).toFixed(2)})</p>
+              @ ${stock.price.toFixed(2)} - (${(stock.price*stock.quantity).toFixed(2)})</p>
             })}
           </div>
           <div className='buy-view' style={{flex: 1}}>
             <h2>Cash: ${(this.state.funds/100).toFixed(2)}</h2>
-            <BuyForm handleBuy={this.handleBuy}/>
+            <BuyForm handleBuy={this.handleBuy} buttonRef={this.buttonRef}/>
           </div>
         </div>
       )

@@ -10,6 +10,8 @@ class BuyForm extends Component {
       cash: 0,
     }
     this.handleChange = this.handleChange.bind(this)
+    this.buttonRef = React.createRef()
+    this.disableButton = this.disableButton.bind(this)
   }
 
   handleChange (evt) {
@@ -18,11 +20,23 @@ class BuyForm extends Component {
     })
   }
 
+  disableButton () {
+    this.buttonRef.current.setAttribute("disabled", "disabled")
+    this.buttonRef.current.setAttribute("style", "color:grey")
+    this.buttonRef.current.innerText = 'Loading...'
+    setTimeout(() => {
+      this.buttonRef.current.removeAttribute("disabled")
+      this.buttonRef.current.setAttribute("style", "color:black")
+      this.buttonRef.current.innerText = 'Buy'
+    }, 1500)
+  }
+
   render() {
-    const { handleBuy } = this.props
+    const { handleBuy, buttonRef } = this.props
     return (
       <div className='buy-form'>
         <form onSubmit={(e) => {
+          this.disableButton()
           handleBuy(e, this.state)
         }}>
           <label htmlFor='symbol'>Symbol: </label>
@@ -37,7 +51,13 @@ class BuyForm extends Component {
             onChange={this.handleChange}
             />
           <br/>
-          <button type='submit'>Buy</button>
+          <button
+            type='submit'
+            ref={this.buttonRef}
+            // onClick={this.disableButton}
+            >
+            Buy
+          </button>
         </form>
       </div>
     )
