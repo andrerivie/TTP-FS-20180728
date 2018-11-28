@@ -11,7 +11,6 @@ class Transactions extends Component {
 
   async componentDidMount() {
     const transactions = await axios.get(`/api/sales/${this.props.userInfo.userId}`)
-    console.log(transactions)
     this.setState({
       transactions: transactions.data
     })
@@ -22,13 +21,13 @@ class Transactions extends Component {
     console.log('STATE TRANS', transactions)
     return (
       <div className='transactions-container' style={{textAlign: 'center'}}>
-          <h2>Transactions</h2>
-          {transactions.map(sale => {
-            return <p key={sale.id}>
-              BUY ({sale.symbol.toUpperCase()}) - {sale.quantity} shares @ $
-              {(sale.price/100).toFixed(2)}
-              </p>
-          })}
+        <h2>Transactions</h2>
+        {transactions.map(sale => {
+          return <p key={sale.id}>
+            BUY ({sale.symbol.toUpperCase()}) - {sale.quantity} shares @ $
+            {(sale.price/100).toFixed(2)}
+            </p>
+        })}
       </div>
     )
   }
