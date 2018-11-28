@@ -6,8 +6,8 @@ class BuyForm extends Component {
     this.state = {
       symbol: '',
       quantity: '',
+      price: '',
       cash: 0,
-
     }
     this.handleChange = this.handleChange.bind(this)
   }

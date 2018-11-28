@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import BuyForm from './BuyForm'
 import axios from 'axios'
+import { runInNewContext } from 'vm';
 
 class Portfolio extends Component {
   constructor (props) {
     super(props)
     this.state = {
       userId: 0,
-      funds: 0,
+      funds: 500000,
       currentValue: 328476,
       porfolio: [
         {
@@ -18,9 +19,11 @@ class Portfolio extends Component {
         ],
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleBuy = this.handleBuy.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const userData = await axios.get(`/api/users/${this.props.userInfo.userId}`)
     this.setState({
       userId: this.props.userInfo.userId
     })
@@ -33,8 +36,25 @@ class Portfolio extends Component {
     })
   }
 
-  handleBuy (evt) {
-
+  async handleBuy (e, buy) {
+    try {
+      e.preventDefault()
+      const {quantity, symbol} = buy
+      const response = await axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/price`)
+      const price = response.data
+      const purchase = {
+        symbol: symbol,
+        quantity: quantity,
+        price: price*100,
+        userId: this.state.userId,
+        funds: this.state.funds
+      }
+      console.log(purchase)
+      const sale = await axios.post('/api/sales', purchase)
+    } catch (error) {
+      alert('Invalid symbol!')
+      next(error)
+    }
   }
 
   render() {
@@ -47,7 +67,7 @@ class Portfolio extends Component {
           })}
         </div>
         <div className='buy-view' style={{flex: 1}}>
-          <BuyForm />
+          <BuyForm handleBuy={this.handleBuy}/>
         </div>
       </div>
     )
