@@ -9,24 +9,24 @@ class Portfolio extends Component {
       userId: 0,
       funds: 0,
       currentValue: 0,
-      porfolio: [
-        {
-          id: 1, name: 'TRX', quantity: 4, price: 432
-        },{
-          id: 2, name: 'SDK', quantity: 5, price: 3413
-        }
-        ],
+      portfolio: [],
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleBuy = this.handleBuy.bind(this)
   }
 
   async componentDidMount() {
-    const userData = await axios.get(`/api/users/${this.props.userInfo.userId}`)
-    const {id, funds} = userData.data
+    const userId = this.props.userInfo.userId
+    const userData = await axios.get(`/api/users/${userId}`)
+    const {funds} = userData.data
+    const portfolioData = await axios.get(`/api/sales/${userId}/portfolio`)
+    const portfolio = portfolioData.data
+    let currentValue = 0
+    portfolio.forEach(item => {
+      currentValue += item.price * item.quantity
+    })
     this.setState({
-      userId: id,
-      funds: funds
+      userId, funds, portfolio, currentValue
     })
   }
 
@@ -68,9 +68,9 @@ class Portfolio extends Component {
     return (
       <div className='portfolio-container' style={{display: 'flex', textAlign: 'center'}}>
         <div className='portfolio-view' style={{flex: 1}}>
-          <h2>Portfolio Value: ${this.state.currentValue}</h2>
-          {this.state.porfolio.map(stock => {
-            return <p key={stock.id}>{stock.name} - {stock.quantity} shares - ${(stock.price*stock.quantity / 100).toFixed(2)}</p>
+          <h2>Portfolio Value: ${this.state.currentValue.toFixed(2)}</h2>
+          {this.state.portfolio.map((stock, idx) => {
+            return <p key={idx}>{stock.symbol.toUpperCase()} - {stock.quantity} shares - ${(stock.price*stock.quantity / 100).toFixed(2)}</p>
           })}
         </div>
         <div className='buy-view' style={{flex: 1}}>
