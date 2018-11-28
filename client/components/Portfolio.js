@@ -65,7 +65,6 @@ class Portfolio extends Component {
   }
 
   render() {
-    console.log(this.state)
     if (this.state.userId === 0) {
       return (
         <div className='loading' style={{textAlign: 'center'}}>
@@ -78,7 +77,7 @@ class Portfolio extends Component {
           <div className='portfolio-view' style={{flex: 1}}>
             <h2>Portfolio Value: ${this.state.currentValue.toFixed(2)}</h2>
             {this.state.portfolio.map((stock, idx) => {
-              return <p key={idx}>{stock.symbol.toUpperCase()} - {stock.quantity} shares - ${(stock.price*stock.quantity / 100).toFixed(2)}</p>
+              return <p key={idx}>{stock.symbol.toUpperCase()} - {stock.quantity} shares - ${(stock.price*stock.quantity).toFixed(2)}</p>
             })}
           </div>
           <div className='buy-view' style={{flex: 1}}>
