@@ -43,7 +43,7 @@ class Portfolio extends Component {
       const response = await axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/price`)
       const price = response.data
       const purchase = {
-        symbol: symbol,
+        symbol: symbol.toUpperCase(),
         quantity: quantity,
         price: price*100,
         userId: this.state.userId,
