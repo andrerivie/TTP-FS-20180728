@@ -53,9 +53,16 @@ class Portfolio extends Component {
       if (sale.data.error) {
         alert(sale.data.error)
       } else {
+        // refresh data
         const newFunds = sale.data.newFunds
+        const portfolioData = await axios.get(`/api/sales/${this.state.userId}/portfolio`)
+        const portfolio = portfolioData.data
+        let currentValue = 0
+        portfolio.forEach(item => {
+          currentValue += item.price * item.quantity
+        })
         this.setState({
-          funds: newFunds
+          newFunds, portfolio, currentValue
         })
       }
     } catch (error) {
@@ -77,7 +84,8 @@ class Portfolio extends Component {
           <div className='portfolio-view' style={{flex: 1}}>
             <h2>Portfolio Value: ${this.state.currentValue.toFixed(2)}</h2>
             {this.state.portfolio.map((stock, idx) => {
-              return <p key={idx}>{stock.symbol.toUpperCase()} - {stock.quantity} shares - ${(stock.price*stock.quantity).toFixed(2)}</p>
+              return <p key={idx}>{stock.symbol.toUpperCase()} - {stock.quantity} shares
+              @ ${stock.price} - (${(stock.price*stock.quantity).toFixed(2)})</p>
             })}
           </div>
           <div className='buy-view' style={{flex: 1}}>
