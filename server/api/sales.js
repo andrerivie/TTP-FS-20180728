@@ -56,7 +56,6 @@ router.get('/:userId/portfolio', async (req, res, next) => {
     await getCurrentPrices()
 
     // combine above arrays in a portfolio object
-    console.log('PRICEARR', priceArr)
     const portfolio = symArr.map((item, idx) => {
       return {
         symbol: item,

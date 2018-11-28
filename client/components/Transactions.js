@@ -18,7 +18,6 @@ class Transactions extends Component {
 
   render() {
     const transactions = this.state.transactions
-    console.log('STATE TRANS', transactions)
     return (
       <div className='transactions-container' style={{textAlign: 'center'}}>
         <h2>Transactions</h2>

@@ -65,20 +65,29 @@ class Portfolio extends Component {
   }
 
   render() {
-    return (
-      <div className='portfolio-container' style={{display: 'flex', textAlign: 'center'}}>
-        <div className='portfolio-view' style={{flex: 1}}>
-          <h2>Portfolio Value: ${this.state.currentValue.toFixed(2)}</h2>
-          {this.state.portfolio.map((stock, idx) => {
-            return <p key={idx}>{stock.symbol.toUpperCase()} - {stock.quantity} shares - ${(stock.price*stock.quantity / 100).toFixed(2)}</p>
-          })}
+    console.log(this.state)
+    if (this.state.userId === 0) {
+      return (
+        <div className='loading' style={{textAlign: 'center'}}>
+          <h2>Loading real-time data...</h2>
         </div>
-        <div className='buy-view' style={{flex: 1}}>
-          <h2>Cash: ${(this.state.funds/100).toFixed(2)}</h2>
-          <BuyForm handleBuy={this.handleBuy}/>
+      )
+    } else {
+      return (
+        <div className='portfolio-container' style={{display: 'flex', textAlign: 'center'}}>
+          <div className='portfolio-view' style={{flex: 1}}>
+            <h2>Portfolio Value: ${this.state.currentValue.toFixed(2)}</h2>
+            {this.state.portfolio.map((stock, idx) => {
+              return <p key={idx}>{stock.symbol.toUpperCase()} - {stock.quantity} shares - ${(stock.price*stock.quantity / 100).toFixed(2)}</p>
+            })}
+          </div>
+          <div className='buy-view' style={{flex: 1}}>
+            <h2>Cash: ${(this.state.funds/100).toFixed(2)}</h2>
+            <BuyForm handleBuy={this.handleBuy}/>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 
