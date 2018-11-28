@@ -28,7 +28,6 @@ class Portfolio extends Component {
       userId: id,
       funds: funds
     })
-
   }
 
   handleChange (evt) {
@@ -51,7 +50,6 @@ class Portfolio extends Component {
         funds: this.state.funds
       }
       const sale = await axios.post('/api/sales', purchase)
-      console.log('SALE', sale)
       if (sale.data.error) {
         alert(sale.data.error)
       } else {

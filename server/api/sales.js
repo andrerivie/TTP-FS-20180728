@@ -1,6 +1,22 @@
 const router = require('express').Router()
 const {User, Sale} = require('../db/db')
 
+router.get('/:userId', async (req, res, next) => {
+  try {
+    const transactions = await Sale.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    const transactionsClean = transactions.map(transaction => {
+      return transaction.dataValues
+    })
+    res.json(transactionsClean)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const {userId, symbol, quantity, price, funds} = req.body
@@ -24,5 +40,7 @@ router.post('/', async (req, res, next) => {
     next(error)
   }
 })
+
+
 
 module.exports = router
