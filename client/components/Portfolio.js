@@ -1,15 +1,14 @@
 import React, {Component} from 'react'
 import BuyForm from './BuyForm'
 import axios from 'axios'
-import { runInNewContext } from 'vm';
 
 class Portfolio extends Component {
   constructor (props) {
     super(props)
     this.state = {
       userId: 0,
-      funds: 500000,
-      currentValue: 328476,
+      funds: 0,
+      currentValue: 0,
       porfolio: [
         {
           id: 1, name: 'TRX', quantity: 4, price: 432
@@ -24,8 +23,10 @@ class Portfolio extends Component {
 
   async componentDidMount() {
     const userData = await axios.get(`/api/users/${this.props.userInfo.userId}`)
+    const {id, funds} = userData.data
     this.setState({
-      userId: this.props.userInfo.userId
+      userId: id,
+      funds: funds
     })
 
   }
@@ -49,11 +50,19 @@ class Portfolio extends Component {
         userId: this.state.userId,
         funds: this.state.funds
       }
-      console.log(purchase)
       const sale = await axios.post('/api/sales', purchase)
+      console.log('SALE', sale)
+      if (sale.data.error) {
+        alert(sale.data.error)
+      } else {
+        const newFunds = sale.data.newFunds
+        this.setState({
+          funds: newFunds
+        })
+      }
     } catch (error) {
-      alert('Invalid symbol!')
-      next(error)
+      alert('Invalid buy order!')
+      console.error(error)
     }
   }
 
@@ -67,6 +76,7 @@ class Portfolio extends Component {
           })}
         </div>
         <div className='buy-view' style={{flex: 1}}>
+          <h2>Cash: ${(this.state.funds/100).toFixed(2)}</h2>
           <BuyForm handleBuy={this.handleBuy}/>
         </div>
       </div>

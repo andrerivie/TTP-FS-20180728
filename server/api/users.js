@@ -1,13 +1,19 @@
 const router = require('express').Router()
 const {User} = require('../db/db')
 
-// router.get('/:id', async (req, res, next) => {
-//   try {
-//     const user = await
-//   } catch (error) {
-
-//   }
-// })
+router.get('/:id', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id)
+    const userData = {
+      id: user.dataValues.id,
+      name: user.dataValues.name,
+      funds: user.dataValues.funds
+    }
+    res.send(userData)
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.post('/login', async (req, res, next) => {
   try {

@@ -22,7 +22,6 @@ class BuyForm extends Component {
     const { handleBuy } = this.props
     return (
       <div className='buy-form'>
-        <h2>Cash: ${this.state.cash}</h2>
         <form onSubmit={(e) => {
           handleBuy(e, this.state)
         }}>

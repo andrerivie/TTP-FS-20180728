@@ -66,7 +66,6 @@ export default class App extends Component {
 
   render() {
     const userId = this.state.userId
-    console.log(this.state)
     return (
       <div id='app-container' style={{padding: '12px'}}>
       {
