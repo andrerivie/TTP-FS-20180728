@@ -32,7 +32,7 @@ class BuyForm extends Component {
   }
 
   render() {
-    const { handleBuy, buttonRef } = this.props
+    const { handleBuy } = this.props
     return (
       <div className='buy-form'>
         <form onSubmit={(e) => {
@@ -51,13 +51,7 @@ class BuyForm extends Component {
             onChange={this.handleChange}
             />
           <br/>
-          <button
-            type='submit'
-            ref={this.buttonRef}
-            // onClick={this.disableButton}
-            >
-            Buy
-          </button>
+          <button type='submit' ref={this.buttonRef}>Buy</button>
         </form>
       </div>
     )
