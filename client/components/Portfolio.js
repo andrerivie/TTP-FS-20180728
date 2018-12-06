@@ -15,25 +15,34 @@ class Portfolio extends Component {
     this.handleBuy = this.handleBuy.bind(this)
   }
 
-  async componentDidMount() {
-    const userId = this.props.userInfo.userId
-    const userData = await axios.get(`/api/users/${userId}`)
-    const {funds} = userData.data
-    const portfolioData = await axios.get(`/api/sales/${userId}/portfolio`)
-    const portfolio = portfolioData.data
-    if (!portfolio.empty) {
-      let currentValue = 0
-      portfolio.forEach(item => {
-        currentValue += item.price * item.quantity
-      })
-      this.setState({
-        userId, funds, portfolio, currentValue
-      })
-    } else {
-      this.setState({
-        userId, funds
-      })
+  componentDidMount() {
+    const getPortfolio = async () => {
+      const userId = this.props.userInfo.userId
+      const userData = await axios.get(`/api/users/${userId}`)
+      const {funds} = userData.data
+      const portfolioData = await axios.get(`/api/sales/${userId}/portfolio`)
+      const portfolio = portfolioData.data
+      if (!portfolio.empty) {
+        let currentValue = 0
+        portfolio.forEach(item => {
+          currentValue += item.price * item.quantity
+        })
+        this.setState({
+          userId, funds, portfolio, currentValue
+        })
+      } else {
+        this.setState({
+          userId, funds
+        })
+      }
     }
+    getPortfolio()
+    this.portfolioTicker = setInterval(getPortfolio, 5000)
+  }
+
+
+  componentWillUnmount() {
+    clearInterval(this.portfolioTicker)
   }
 
   handleChange (evt) {
