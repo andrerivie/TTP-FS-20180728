@@ -21,13 +21,19 @@ class Portfolio extends Component {
     const {funds} = userData.data
     const portfolioData = await axios.get(`/api/sales/${userId}/portfolio`)
     const portfolio = portfolioData.data
-    let currentValue = 0
-    portfolio.forEach(item => {
-      currentValue += item.price * item.quantity
-    })
-    this.setState({
-      userId, funds, portfolio, currentValue
-    })
+    if (!portfolio.empty) {
+      let currentValue = 0
+      portfolio.forEach(item => {
+        currentValue += item.price * item.quantity
+      })
+      this.setState({
+        userId, funds, portfolio, currentValue
+      })
+    } else {
+      this.setState({
+        userId, funds
+      })
+    }
   }
 
   handleChange (evt) {
@@ -66,7 +72,7 @@ class Portfolio extends Component {
         })
       }
     } catch (error) {
-      alert('Invalid buy order!')
+      alert('Invalid symbol or quantity!')
       console.error(error)
     }
   }
@@ -84,9 +90,14 @@ class Portfolio extends Component {
           <div className='portfolio-view' style={{flex: 1}}>
             <h2>Portfolio Value: ${this.state.currentValue.toFixed(2)}</h2>
             {this.state.portfolio.map((stock, idx) => {
-              return <p key={idx}>{stock.symbol.toUpperCase()} - {stock.quantity} shares
-              @ ${stock.price.toFixed(2)} - (${(stock.price*stock.quantity).toFixed(2)})</p>
-            })}
+              return (
+              <p key={idx}>
+              <font color={stock.color}>{stock.symbol.toUpperCase()} </font>
+              - {stock.quantity} shares @
+              <font color={stock.color}> ${stock.price.toFixed(2) + ' '}
+                (${(stock.price*stock.quantity).toFixed(2)})</font>
+              </p>
+            )})}
           </div>
           <div className='buy-view' style={{flex: 1}}>
             <h2>Cash: ${(this.state.funds/100).toFixed(2)}</h2>

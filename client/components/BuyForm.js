@@ -6,7 +6,7 @@ class BuyForm extends Component {
     this.state = {
       symbol: '',
       quantity: '',
-      price: '',
+      price: 0,
       cash: 0,
     }
     this.handleChange = this.handleChange.bind(this)
@@ -23,12 +23,17 @@ class BuyForm extends Component {
   disableButton () {
     this.buttonRef.current.setAttribute("disabled", "disabled")
     this.buttonRef.current.setAttribute("style", "color:grey")
-    this.buttonRef.current.innerText = 'Loading...'
+    this.buttonRef.current.innerText = 'Buying...'
     setTimeout(() => {
       this.buttonRef.current.removeAttribute("disabled")
       this.buttonRef.current.setAttribute("style", "color:black")
       this.buttonRef.current.innerText = 'Buy'
-    }, 1500)
+      this.setState({
+        symbol: '',
+        quantity: '',
+        price: 0
+      })
+    }, 1000)
   }
 
   render() {
