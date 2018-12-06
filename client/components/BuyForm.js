@@ -11,6 +11,7 @@ class BuyForm extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.buttonRef = React.createRef()
+    this.symbolRef = React.createRef()
     this.disableButton = this.disableButton.bind(this)
   }
 
@@ -28,6 +29,7 @@ class BuyForm extends Component {
       this.buttonRef.current.removeAttribute("disabled")
       this.buttonRef.current.setAttribute("style", "color:black")
       this.buttonRef.current.innerText = 'Buy'
+      this.symbolRef.current.focus()
       this.setState({
         symbol: '',
         quantity: '',
@@ -46,6 +48,7 @@ class BuyForm extends Component {
         }}>
           <label htmlFor='symbol'>Symbol: </label>
             <input type='text' name='symbol'
+              ref={this.symbolRef}
               value={this.state.symbol}
               onChange={this.handleChange}
             />
