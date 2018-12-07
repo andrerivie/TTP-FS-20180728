@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const db = new Sequelize('postgres://localhost/stockapp', {logging: false})
+const Sequelize = require('sequelize');
+const db = new Sequelize('postgres://localhost/stockapp', { logging: false });
 
 const User = db.define('users', {
   name: {
@@ -15,7 +15,7 @@ const User = db.define('users', {
     unique: true,
     validate: {
       isEmail: true,
-      notEmpty: true,
+      notEmpty: true
     }
   },
   password: {
@@ -29,7 +29,7 @@ const User = db.define('users', {
     type: Sequelize.INTEGER,
     defaultValue: 500000
   }
-})
+});
 
 const Sale = db.define('sales', {
   symbol: {
@@ -47,13 +47,12 @@ const Sale = db.define('sales', {
     type: Sequelize.INTEGER,
     allowNull: false
   }
-})
+});
 
-User.hasMany(Sale)
+User.hasMany(Sale);
 
 module.exports = {
   db,
   User,
   Sale
-}
-
+};

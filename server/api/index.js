@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
 router.use('/users', require('./users'));
-router.use('/sales', require('./sales'))
+router.use('/sales', require('./sales'));
 
-router.use(function (req, res, next) {
+router.use(function(req, res, next) {
   const err = new Error('Not found.');
   err.status = 404;
   next(err);
